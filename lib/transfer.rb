@@ -3,11 +3,11 @@ class Transfer
   attr_accessor :sender, :receiver, :status, :amount, :lasttransfer
 
 
-  def initialize(sender, receiver, amount)
+  def initialize(sender, receiver, amount= 50)
     @sender = sender
     @receiver = receiver
     @status = "pending"
-    @amount = 50
+    @amount = 
     @lasttransfer = 0
   end
 
@@ -33,9 +33,11 @@ class Transfer
   end
   
   def reverse_transfer
-    @sender.balance = @send.balance + @lasttransfer
-    @receiver.balance = @receiver.balance - @lasttransfer
-    self.status = "reversed"
+    if self.status == "complete"
+      @sender.balance = @send.balance + @lasttransfer
+      @receiver.balance = @receiver.balance - @lasttransfer
+      self.status = "reversed"
+    end
   end
 
 
